@@ -14,18 +14,14 @@
 
 
 //params.input = Channel.fromPath( '/efs/nextflow/pipeline/input/pipeline-1/fastq/*.fastq.gz' )
-//params.input = ( '/efs/nextflow/pipeline/input/pipeline-1/fastq/*.fastq.gz' )
-//params.input = ( 's3:///sb-nfs/scape/input/pipeline-1/fastq/*.fastq.gz' )
-params.outdir = "./results"
+params.input = ( '/mnt/pipeline/input/pipeline-1/fastq/*.fastq.gz' )
+params.outdir = "/mnt/srini/results"
 
 /*
 * Basic validation for the input fiile exists
 */
 
-input_file = file("s3://sb-nfs/scape/input/pipeline-1/fastq/*.fastq.gz")
-println input_file.txt
-//input_file = Channel.fromPath("s3://sb-nfs/scape/input/pipeline-1/fastq/*_fastq.gz", checkIfExists: true)
-
+input_file = file(params.input)
 
 /*
  * Create a channel for input read files
@@ -39,7 +35,7 @@ process fastqc_before {
                saveAs: {filename -> filename.indexOf(".zip") > 0 ? "zips/$filename" : "$filename"}
 
     input:
-    file(reads) from input_file.txt
+    file(reads) from input_file
 
     output:
     file "*_fastqc.{zip,html}" into  preqc_results

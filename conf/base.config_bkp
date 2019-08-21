@@ -34,18 +34,16 @@ process {
     memory = { check_max( 200.GB * task.attempt, 'memory' ) }
     time = { check_max( 5.h * task.attempt, 'time' ) }
   }
-  withLabel: low_cm {
-    cpus = { check_max( 4, 'cpus' ) }
-    memory = { check_max( 8.GB * task.attempt, 'memory' ) }
+  withLabel: low_memory {
+    memory = { check_max( 16.GB * task.attempt, 'memory' ) }
   }
-  withLabel: high_cpu {
-    cpus = { check_max (16, 'cpus')}
-    memory = { check_max( 60.GB * task.attempt, 'memory' ) }
+  withLabel: mid_memory {
+    memory = { check_max( 32.GB * task.attempt, 'memory' ) }
     time = { check_max( 8.h * task.attempt, 'time' ) }
   }
   withLabel: high_memory {
-    cpus = { check_max (8, 'cpus')}
-    memory = { check_max( 120.GB * task.attempt, 'memory' ) }
+    cpus = { check_max (10, 'cpus')}
+    memory = { check_max( 80.GB * task.attempt, 'memory' ) }
     time = { check_max( 8.h * task.attempt, 'time' ) }
   }
   withName: "multiqc|get_software_versions" {

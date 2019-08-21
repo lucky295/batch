@@ -6,14 +6,14 @@
  */
 params {
   config_profile_name = 'AWSBATCH'
-  config_profile_description = 'AWSBATCH Cloud Profile'
+  config_profile_description = 'AWS BATCH Cloud Profile'
   config_profile_contact = 'srinivasarao A (@asrini)'
   config_profile_url = 'https://aws.amazon.com/de/batch/'
 }
 
-workDir = 's3://sb-nfs/scape/work'
-aws.region = 'us-east-1'
+//workDir = 's3://sb-nfs/scape/nextflow-jobs/work-3'
+aws.region = us-east-1
 process.executor = 'awsbatch'
-process.container = 'srinivas295/pipeline'
 process.queue = 'NFS-Batch-Queue'
+process.container = 'srinivas295/pipeline:latest'
 aws.batch.cliPath = '/home/ec2-user/miniconda/bin/aws'

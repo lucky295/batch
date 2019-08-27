@@ -363,3 +363,35 @@ process multiQC {
     multiqc . -f $rtitle $rfilename --config $multiqc_config
     """
 }
+
+
+/*
+* TxImport - 6
+*/
+
+if(params.tx2gene_file) {
+  my_tx2gene = file(params.tx2gene_file)
+}
+
+process txImport_summary {
+    label 'high_memory'
+    publishDir "${params.outdir}/summary", mode: 'copy'
+
+    input:
+    file 'quant/*' from quant_ch_summary.collect()
+    file (gene) from  my_tx2gene
+
+    output:
+    file "*.csv" into dge_results
+
+    script:
+    if(params.tx2gene_file) {
+        """
+        forAWS_getSalmonQuants_txImport.r  quant $gene
+        """
+    } else {
+        """
+        forAWS_getSalmonQuants_txImport.r  quant
+        """
+    }
+}
